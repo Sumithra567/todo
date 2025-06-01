@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .completed-btn {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+
+        .edit-btn {
+            background-color: #2196F3; /* Blue */
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo List</h1>
+    <button onclick="handleInput()">Add TODO</button>
+    <ul id="list"></ul>
+
+<script>
+    function handleInput() {
+        const list = document.getElementById("list");
+        let todo_task = prompt("Enter the task:");
+        todo_task = todo_task.trim();
+
+        if (todo_task !== "") {
+            const todo_item = document.createElement("li");
+            todo_item.innerText = todo_task + " ";
+
+            // Create 'Completed' button
+            const completed_btn = document.createElement("button");
+            completed_btn.innerText = "Completed";
+            completed_btn.className = "completed-btn";
+            completed_btn.addEventListener("click", () => {
+                handleCompleted(todo_item);
+            });
+
+            // Create 'Edit' button
+            const edit_btn = document.createElement("button");
+            edit_btn.innerText = "Edit";
+            edit_btn.className = "edit-btn";
+            edit_btn.addEventListener("click", () => {
+                const new_task = prompt("Edit the task:", todo_item.firstChild.textContent.trim());
+                if (new_task !== null && new_task.trim() !== "") {
+                    todo_item.firstChild.textContent = new_task.trim() + " ";
+                }
+            });
+
+            // Create 'Delete' button
+            const delete_btn = document.createElement("button");
+            delete_btn.innerText = "Delete";
+            delete_btn.className = "delete-btn";
+            delete_btn.addEventListener("click", () => {
+                list.removeChild(todo_item);
+            });
+
+            todo_item.appendChild(completed_btn);
+            todo_item.appendChild(edit_btn);
+            todo_item.appendChild(delete_btn);
+            list.appendChild(todo_item);
+        }
+    }
+
+    function handleCompleted(item) {
+        item.style.textDecoration = "line-through";
+        item.style.color = "red";
+    }
+</script>
+</body>
+</html>
